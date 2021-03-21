@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,8 +18,6 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class AcceuilActivity extends AppCompatActivity {
 
-    private EditText passwordEditText;
-    private EditText identifiantEditText;
     private Button qrCodeReaderButton;
 
     @Override
@@ -30,17 +28,12 @@ public class AcceuilActivity extends AppCompatActivity {
         qrCodeReaderButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
+                //Création de l'interface de scan.
                 IntentIntegrator intentIntegrator = new IntentIntegrator(AcceuilActivity.this);
-
-                intentIntegrator.setPrompt("utilisez volume");
-
+                intentIntegrator.setPrompt("Encadrez un QR Code avec le viseur pour le scanner");
                 intentIntegrator.setBeepEnabled(true);
-
                 intentIntegrator.setOrientationLocked(true);
-
                 intentIntegrator.setCaptureActivity(Capture.class);
-
                 intentIntegrator.initiateScan();
             }
         });
@@ -51,7 +44,7 @@ public class AcceuilActivity extends AppCompatActivity {
         }
 
     }
-
+    //Fonction appelé si un resultat est trouvé lors du scan.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -63,8 +56,8 @@ public class AcceuilActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     AcceuilActivity.this
             );
-            builder.setTitle("Resultat");
-
+            builder.setTitle("Resultats");
+            //Affichage du texte du QR code
             builder.setMessage(intentResult.getContents());
 
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -75,8 +68,9 @@ public class AcceuilActivity extends AppCompatActivity {
             });
             builder.show();
         } else {
+            //Erreur si retour en arriere ou si qr code non trouvé.
             Toast.makeText(getApplicationContext(),
-                    "erreur non scanné", Toast.LENGTH_SHORT)
+                    "Aucun QR Code scanné.", Toast.LENGTH_SHORT)
                     .show();
         }
     }

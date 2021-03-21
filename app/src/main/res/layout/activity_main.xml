@@ -17,8 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="36dp"
-            android:capitalize="sentences"
-            android:text="All4Sport"
+            android:text="@string/all4sport"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="#F8F8F8"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +35,7 @@
             android:layout_marginEnd="112dp"
             android:layout_marginRight="112dp"
             android:layout_marginBottom="400dp"
-            android:text="Se connecter"
+            android:text="@string/se_connecter"
             app:backgroundTint="#5A0000"
             app:backgroundTintMode="add"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +54,7 @@
             android:layout_marginRight="101dp"
             android:layout_marginBottom="149dp"
             android:ems="10"
-            android:hint="Mot de passe"
+            android:hint="@string/mot_de_passe"
             android:inputType="textPassword"
             android:textColor="#F8F3F3"
             android:textColorHighlight="#FFFAFA"
@@ -64,7 +63,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/idUser"
@@ -76,13 +76,27 @@
             android:layout_marginEnd="101dp"
             android:layout_marginRight="101dp"
             android:ems="10"
-            android:hint="Identifiant"
+            android:hint="@string/identifiant"
             android:inputType="textPersonName"
             android:textColor="#F8F3F3"
             android:textColorHint="#EFEFEF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="" />
+
+        <TextView
+            android:id="@+id/Erreur"
+            android:layout_width="220dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="95dp"
+            android:layout_marginTop="47dp"
+            android:layout_marginEnd="96dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/Connection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passUser" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

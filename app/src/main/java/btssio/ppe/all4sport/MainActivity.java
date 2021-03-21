@@ -6,6 +6,7 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText passwordEditText;
     private EditText identifiantEditText;
-
+    private TextView textErreur;
     private Button connecterButton;
 
     @Override
@@ -37,61 +38,47 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
+        //Récuperation des boutons & des champs de saisie
         passwordEditText = (EditText) findViewById(R.id.passUser);
         identifiantEditText = (EditText) findViewById(R.id.idUser);
         connecterButton = (Button) findViewById(R.id.Connection);
-
-
+        textErreur = (TextView) findViewById(R.id.Erreur);
+        //Fonction du bouton se connecter.
         connecterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!passwordEditText.getText().toString().equals("") && !identifiantEditText.getText().toString().equals("")){
-
                     connecter(identifiantEditText.getText().toString(),passwordEditText.getText().toString());
-
-                } else {
-
                 }
-
             }
         });
     }
 
     private boolean connecter(String identifiant, String password) {
         try {
-
-            //URL url = new URL("https://10.0.2.2:80/PPE4_ALL4SPORT/controller/index.php?loginInfo="+obj);
-            //URL url = new URL("http://192.168.1.28:80/PPE4_ALL4SPORT/controller/index.php?loginInfo="+obj);
+            /**
+             * Pour utiliser en local:
+             * URL url = new URL("http://IPLocal:PORT/PPE4_ALL4SPORT/controller/index.php?loginInfo={\"login\":\""+identifiant+"\",\"password\":\""+password+"\"}");
+             */
+            //Appel au web service avec un json contenant l'identifiant et le mot de passe.
             URL url = new URL("https://quentindelaporte.fr/PPE4_ALL4SPORT/Controller/index.php?loginInfo={\"login\":\""+identifiant+"\",\"password\":\""+password+"\"}");
             URLConnection conn = url.openConnection();
             BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
             URLConnection request = url.openConnection();
             request.connect();
 
+            //Lecture du JSON
             JsonParser jp = new JsonParser();
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-
             JsonObject rootobj = root.getAsJsonObject();
             String canConnect = rootobj.get("connexionValide").getAsString();
-            System.out.println(canConnect);
 
+            //Si le webservice retourne 1 alors il peut se connecter
             if(Boolean.parseBoolean(canConnect)){
                 launchActivity();
+            } else {
+                textErreur.setText("Ce couple identifiant / Mot de passe n'est pas valide.");
             }
-
-
-
-            /**String line;
-            line = rd.readLine();
-            if (line != null) {
-                System.out.println(line);
-
-                return true;
-
-            }
-            rd.close();**/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchActivity() {
-
+        //Changement d'activité -> Affichage du menu Main.
         Intent intent = new Intent(this, AcceuilActivity.class);
         startActivity(intent);
     }
