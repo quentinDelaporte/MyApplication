@@ -1,24 +1,38 @@
 package btssio.ppe.all4sport;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText identifiantEditText;
     private TextView textErreur;
     private Button connecterButton;
-
+    private LocationManager locationManager;
+    private LocationListener Listener;
+    private double lat, lon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -53,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
     private boolean connecter(String identifiant, String password) {
         try {
