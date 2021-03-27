@@ -40,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText identifiantEditText;
     private TextView textErreur;
     private Button connecterButton;
-    private LocationManager locationManager;
-    private LocationListener Listener;
-    private double lat, lon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -69,60 +67,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        Listener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                System.out.println("\n" +location.getLatitude()+" "+location.getLongitude());
-                lat=location.getLatitude();
-                lon=location.getLongitude();
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(i);
-            }
-        };
-        configureButton();
 
 
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case 10:
-                configureButton();
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void configureButton(){
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}
-                        ,10);
-            }
-            return;
-        }
-        locationManager.requestLocationUpdates("gps", 5000, 0, Listener);
-    }
-
-
-
 
     private boolean connecter(String identifiant, String password) {
         try {

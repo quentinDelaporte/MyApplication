@@ -35,10 +35,6 @@ import java.util.Locale;
 public class AcceuilActivity extends AppCompatActivity {
 
     private Button qrCodeReaderButton;
-    private EditText passwordEditText;
-    private EditText identifiantEditText;
-    private TextView textErreur;
-    private Button connecterButton;
     private LocationManager locationManager;
     private LocationListener Listener;
     private double lat, lon;
@@ -58,7 +54,7 @@ public class AcceuilActivity extends AppCompatActivity {
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
                 intentIntegrator.initiateScan();
-            } 
+            }
         });
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
