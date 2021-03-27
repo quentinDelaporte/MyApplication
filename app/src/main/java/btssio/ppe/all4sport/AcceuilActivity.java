@@ -58,7 +58,7 @@ public class AcceuilActivity extends AppCompatActivity {
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
                 intentIntegrator.initiateScan();
-            }
+            } 
         });
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
