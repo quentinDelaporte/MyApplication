@@ -2,6 +2,9 @@
 
 Fonctionnalitées implémentées:
 - Lecteur de qr code
-- connexion au web service
-- connexion utilisateur
+- Geo localisation
+- Connexion au web service
+- Connexion utilisateur
+- Interface d'insertion de produit.
+
  
