@@ -87,6 +87,50 @@
             android:importantForAutofill="no"
             tools:ignore="LabelFor" />
 
+        <TextView
+            android:id="@+id/EntrepotTextView"
+            android:layout_width="213dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="101dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginEnd="97dp"
+            android:text="Entrepot :"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/Entrepot"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titre"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/idProduitTextView"
+            android:layout_width="218dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="97dp"
+            android:text="Id du produit"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/ProduitId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Entrepot" />
+
+        <TextView
+            android:id="@+id/qteTextView"
+            android:layout_width="222dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="94dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="95dp"
+            android:text="Quantité à ajouter"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ProduitId" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
