@@ -110,7 +110,7 @@
             android:layout_marginStart="96dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="97dp"
-            android:text="Id du produit"
+            android:text="Référence du produit"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/ProduitId"
             app:layout_constraintEnd_toEndOf="parent"

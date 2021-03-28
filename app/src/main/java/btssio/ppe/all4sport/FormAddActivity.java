@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +24,12 @@ public class FormAddActivity extends AppCompatActivity {
     private TextView entrepotTextView;
     private TextView produitIdTextView;
     private Button modifierButton;
+    private EditText editTextNumber;
     private String produitId;
     private String entrepot;
     private String name;
+    private String msgRetour;
+    private String quantite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class FormAddActivity extends AppCompatActivity {
         entrepotTextView = (TextView) findViewById(R.id.Entrepot);
         produitIdTextView = (TextView) findViewById(R.id.ProduitId);
         modifierButton = (Button) findViewById(R.id.Modifier);
+        editTextNumber = (EditText) findViewById(R.id.editTextNumber);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -48,9 +53,13 @@ public class FormAddActivity extends AppCompatActivity {
             entrepot = extras.getString("location");
             entrepotTextView.setText(entrepot);
             produitIdTextView.setText(produitId);
-
+            if(entrepot==null) {
+                msgRetour = "Nous ne sommes pas parvenu à vous localiser, veuillez réessayer.";
+                launchActivity();
+            }
         } else {
-
+            msgRetour="Erreur, veuillez réessayer";
+            launchActivity();
         }
 
 
@@ -58,9 +67,13 @@ public class FormAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 try {
+                    System.out.println(entrepot);
                     update();
+                    msgRetour="Le produit as été ajouté avec succés.";
                 } catch (IOException e) {
                     e.printStackTrace();
+                    msgRetour="Erreur lors de l'insertion du produit veuillez réessayer.";
+
                 }
                 launchActivity();
             }
@@ -68,7 +81,12 @@ public class FormAddActivity extends AppCompatActivity {
     }
 
     private void update() throws IOException {
-        URL url = new URL("https://quentindelaporte.fr/PPE4_ALL4SPORT/Controller/modifierQuantite.php?quantite="+5+"&ville="+7+"&id=idProduit="+produitId);
+        quantite = editTextNumber.getText().toString();
+
+        System.out.println(quantite);
+        System.out.println(entrepot);
+        System.out.println(produitId);
+        URL url = new URL("https://quentindelaporte.fr/PPE4_ALL4SPORT/Controller/modifierQuantite.php?quantite="+quantite+"&ville="+entrepot+"&id="+produitId);
         URLConnection conn = url.openConnection();
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         URLConnection request = url.openConnection();
@@ -78,6 +96,7 @@ public class FormAddActivity extends AppCompatActivity {
     private void launchActivity() {
         Intent intent = new Intent(this, AcceuilActivity.class);
         intent.putExtra("name", name);
+        intent.putExtra("msgRetour", msgRetour);
 
         startActivity(intent);
     }

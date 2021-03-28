@@ -43,6 +43,7 @@ import static java.lang.Integer.parseInt;
 
 public class AcceuilActivity extends AppCompatActivity {
 
+    private Button listePdtEpuiseBtn;
     private Button qrCodeReaderButton;
     private LocationManager locationManager;
     private LocationListener Listener;
@@ -51,19 +52,21 @@ public class AcceuilActivity extends AppCompatActivity {
     private TextView texteAcceuil;
     private String idProduit;
     private String name;
+    private String msgRetour;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceuil);
         qrCodeReaderButton =  findViewById(R.id.readQrCode);
         texteAcceuil = (TextView) findViewById(R.id.texteAcceuil);
+        listePdtEpuiseBtn = (Button) findViewById(R.id.listePdtEpuiseBtn);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             name = extras.getString("name");
-            texteAcceuil.setText("Bonjour, "+name);
-        } else {
-            texteAcceuil.setText("Bonjour, ???");
-
+            msgRetour=extras.getString("msgRetour");
+            texteAcceuil.setText(msgRetour);
         }
 
         qrCodeReaderButton.setOnClickListener(new View.OnClickListener(){
@@ -76,6 +79,13 @@ public class AcceuilActivity extends AppCompatActivity {
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
                 intentIntegrator.initiateScan();
+            }
+        });
+
+        listePdtEpuiseBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                launchProduitEpuiseActivity();
             }
         });
 
@@ -99,6 +109,10 @@ public class AcceuilActivity extends AppCompatActivity {
 
         if(intentResult.getContents() !=null){
             idProduit = intentResult.getContents();
+
+            //Verif que ref pdt existe avec info prdt
+
+
             launchActivity();
         } else {
             //Erreur si retour en arriere ou si qr code non trouvé.
@@ -136,7 +150,6 @@ public class AcceuilActivity extends AppCompatActivity {
         Listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location loc) {
-                System.out.println("\n" + loc.getLatitude() + " " + loc.getLongitude());
                 lat = loc.getLatitude();
                 lon = loc.getLongitude();
                 Geocoder gcd = new Geocoder(contexte, Locale.getDefault());
@@ -176,6 +189,14 @@ public class AcceuilActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FormAddActivity.class);
         intent.putExtra("location",location);
         intent.putExtra("idProduit",idProduit);
+        intent.putExtra("name", name);
+
+        startActivity(intent);
+    }
+
+    private void launchProduitEpuiseActivity() {
+        Intent intent = new Intent(this, ProduitEpuisesActivity.class);
+        intent.putExtra("location",location);
         intent.putExtra("name", name);
 
         startActivity(intent);
