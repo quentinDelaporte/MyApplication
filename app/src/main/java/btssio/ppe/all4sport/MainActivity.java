@@ -52,17 +52,21 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
         //Récuperation des boutons & des champs de saisie
         passwordEditText = (EditText) findViewById(R.id.passUser);
         identifiantEditText = (EditText) findViewById(R.id.idUser);
         connecterButton = (Button) findViewById(R.id.Connection);
         textErreur = (TextView) findViewById(R.id.Erreur);
+
+
         //Fonction du bouton se connecter.
         connecterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!passwordEditText.getText().toString().equals("") && !identifiantEditText.getText().toString().equals("")){
                     connecter(identifiantEditText.getText().toString(),passwordEditText.getText().toString());
+
                 }
             }
         });
@@ -103,8 +107,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchActivity() {
-        //Changement d'activité -> Affichage du menu Main.
+        //Changement d'activité -> Affichage du menu Acceuil.
         Intent intent = new Intent(this, AcceuilActivity.class);
+        intent.putExtra("name",identifiantEditText.getText().toString());
         startActivity(intent);
     }
 

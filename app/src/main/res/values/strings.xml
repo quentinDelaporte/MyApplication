@@ -7,4 +7,5 @@
     <string name="se_connecter">Se connecter</string>
     <string name="identifiant">Identifiant</string>
     <string name="lire_un_qr_code">Lire un QR code</string>
+    <string name="modifier">Modifier</string>
 </resources>

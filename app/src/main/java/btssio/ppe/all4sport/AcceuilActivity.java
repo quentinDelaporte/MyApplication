@@ -28,9 +28,14 @@ import androidx.core.app.ActivityCompat;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static java.lang.Integer.parseInt;
 
 public class AcceuilActivity extends AppCompatActivity {
 
@@ -38,12 +43,25 @@ public class AcceuilActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener Listener;
     private double lat, lon;
-
+    private String location;
+    private TextView texteAcceuil;
+    private String idProduit;
+    private String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceuil);
         qrCodeReaderButton =  findViewById(R.id.readQrCode);
+        texteAcceuil = (TextView) findViewById(R.id.texteAcceuil);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            name = extras.getString("name");
+            texteAcceuil.setText("Bonjour, "+name);
+        } else {
+            texteAcceuil.setText("Bonjour, ???");
+
+        }
+
         qrCodeReaderButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -64,7 +82,9 @@ public class AcceuilActivity extends AppCompatActivity {
 
         getLocation(this);
 
+
     }
+
     //Fonction appelé si un resultat est trouvé lors du scan.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -74,20 +94,8 @@ public class AcceuilActivity extends AppCompatActivity {
         );
 
         if(intentResult.getContents() !=null){
-            AlertDialog.Builder builder = new AlertDialog.Builder(
-                    AcceuilActivity.this
-            );
-            builder.setTitle("Resultats");
-            //Affichage du texte du QR code
-            builder.setMessage(intentResult.getContents());
-
-            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int which) {
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.show();
+            idProduit = intentResult.getContents();
+            launchActivity();
         } else {
             //Erreur si retour en arriere ou si qr code non trouvé.
             Toast.makeText(getApplicationContext(),
@@ -100,14 +108,14 @@ public class AcceuilActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case 10:
-                configureButton();
+                verifPerms();
                 break;
             default:
                 break;
         }
     }
 
-    public void configureButton(){
+    public void verifPerms(){
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}
@@ -123,16 +131,17 @@ public class AcceuilActivity extends AppCompatActivity {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         Listener = new LocationListener() {
             @Override
-            public void onLocationChanged(Location location) {
-                System.out.println("\n" + location.getLatitude() + " " + location.getLongitude());
-                lat = location.getLatitude();
-                lon = location.getLongitude();
+            public void onLocationChanged(Location loc) {
+                System.out.println("\n" + loc.getLatitude() + " " + loc.getLongitude());
+                lat = loc.getLatitude();
+                lon = loc.getLongitude();
                 Geocoder gcd = new Geocoder(contexte, Locale.getDefault());
                 List<Address> addresses = null;
                 try {
                     addresses = gcd.getFromLocation(lat, lon, 1);
                     if (addresses.size() > 0) {
                         System.out.println(addresses.get(0).getLocality());
+                        location = addresses.get(0).getLocality();
                     } else {
                         // do your stuff
                     }
@@ -156,8 +165,19 @@ public class AcceuilActivity extends AppCompatActivity {
                 startActivity(i);
             }
         };
-        configureButton();
+        verifPerms();
     }
+
+    private void launchActivity() {
+        Intent intent = new Intent(this, FormAddActivity.class);
+        intent.putExtra("location",location);
+        intent.putExtra("idProduit",idProduit);
+        intent.putExtra("name", name);
+
+        startActivity(intent);
+    }
+
+
 
 
 }
