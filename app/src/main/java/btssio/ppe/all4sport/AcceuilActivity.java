@@ -45,6 +45,7 @@ public class AcceuilActivity extends AppCompatActivity {
 
     private Button listePdtEpuiseBtn;
     private Button qrCodeReaderButton;
+    private Button listePdtEnStockBtn;
     private LocationManager locationManager;
     private LocationListener Listener;
     private double lat, lon;
@@ -61,7 +62,7 @@ public class AcceuilActivity extends AppCompatActivity {
         qrCodeReaderButton =  findViewById(R.id.readQrCode);
         texteAcceuil = (TextView) findViewById(R.id.texteAcceuil);
         listePdtEpuiseBtn = (Button) findViewById(R.id.listePdtEpuiseBtn);
-
+        listePdtEnStockBtn = (Button) findViewById(R.id.listePdtEnStockBtn);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             name = extras.getString("name");
@@ -88,7 +89,12 @@ public class AcceuilActivity extends AppCompatActivity {
                 launchProduitEpuiseActivity();
             }
         });
-
+        listePdtEnStockBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                launchProduitEnStockActivity();
+            }
+        });
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -196,6 +202,14 @@ public class AcceuilActivity extends AppCompatActivity {
 
     private void launchProduitEpuiseActivity() {
         Intent intent = new Intent(this, ProduitEpuisesActivity.class);
+        intent.putExtra("location",location);
+        intent.putExtra("name", name);
+
+        startActivity(intent);
+    }
+
+    private void launchProduitEnStockActivity() {
+        Intent intent = new Intent(this, ProduitEnStockActivity.class);
         intent.putExtra("location",location);
         intent.putExtra("name", name);
 

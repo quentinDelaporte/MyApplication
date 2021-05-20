@@ -8,7 +8,14 @@
         android:id="@+id/acceuilActivity"
         android:name="btssio.ppe.all4sport.AcceuilActivity"
         android:label="activity_acceuil"
-        tools:layout="@layout/activity_acceuil" />
+        tools:layout="@layout/activity_acceuil" >
+        <action
+            android:id="@+id/action_acceuilActivity_to_capture"
+            app:destination="@id/capture" />
+        <action
+            android:id="@+id/action_acceuilActivity_to_produitEpuisesActivity"
+            app:destination="@id/produitEpuisesActivity" />
+    </activity>
     <activity
         android:id="@+id/mainActivity2"
         android:name="btssio.ppe.all4sport.MainActivity"
@@ -16,6 +23,26 @@
         tools:layout="@layout/activity_main" >
         <action
             android:id="@+id/action_mainActivity2_to_acceuilActivity"
+            app:destination="@id/acceuilActivity" />
+    </activity>
+    <activity
+        android:id="@+id/capture"
+        android:name="btssio.ppe.all4sport.Capture"
+        android:label="Capture" >
+        <action
+            android:id="@+id/action_capture_to_formAddActivity"
+            app:destination="@id/formAddActivity" />
+    </activity>
+    <activity
+        android:id="@+id/produitEpuisesActivity"
+        android:name="btssio.ppe.all4sport.ProduitEpuisesActivity"
+        android:label="ProduitEpuisesActivity" />
+    <activity
+        android:id="@+id/formAddActivity"
+        android:name="btssio.ppe.all4sport.FormAddActivity"
+        android:label="FormAddActivity" >
+        <action
+            android:id="@+id/action_formAddActivity_to_acceuilActivity"
             app:destination="@id/acceuilActivity" />
     </activity>
 </navigation>

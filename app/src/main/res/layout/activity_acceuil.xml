@@ -51,6 +51,23 @@
             app:layout_constraintTop_toBottomOf="@+id/passUser"
             tools:ignore="UnknownIdInLayout" />
 
+        <Button
+            android:id="@+id/listePdtEnStockBtn"
+            android:layout_width="387dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="-40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="364dp"
+            android:text="Voir la liste des produits en Stock"
+            app:backgroundTint="#5A0000"
+            app:backgroundTintMode="add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passUser"
+            tools:ignore="UnknownIdInLayout" />
+
         <TextView
             android:id="@+id/titre"
             android:layout_width="wrap_content"

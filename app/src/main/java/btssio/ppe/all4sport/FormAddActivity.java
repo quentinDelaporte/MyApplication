@@ -20,7 +20,6 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class FormAddActivity extends AppCompatActivity {
-
     private TextView entrepotTextView;
     private TextView produitIdTextView;
     private Button modifierButton;
@@ -86,6 +85,9 @@ public class FormAddActivity extends AppCompatActivity {
         System.out.println(quantite);
         System.out.println(entrepot);
         System.out.println(produitId);
+        entrepot = entrepot.replace(' ', '-');
+        System.out.println(entrepot);
+
         URL url = new URL("https://quentindelaporte.fr/PPE4_ALL4SPORT/Controller/modifierQuantite.php?quantite="+quantite+"&ville="+entrepot+"&id="+produitId);
         URLConnection conn = url.openConnection();
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));

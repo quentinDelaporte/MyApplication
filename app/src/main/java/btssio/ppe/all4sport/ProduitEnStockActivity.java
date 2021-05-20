@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,20 +18,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static btssio.ppe.all4sport.R.layout.activity_produits_en_stock;
 import static btssio.ppe.all4sport.R.layout.activity_produits_epuises;
 
-public class ProduitEpuisesActivity extends AppCompatActivity {
+public class ProduitEnStockActivity extends AppCompatActivity {
 
     private String msgRetour;
     private String entrepot;
-    private ArrayAdapter<String> adapter;
-    private ListView pdtEpuiseListView;
+    private ListView pdtEnStockListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(activity_produits_epuises);
-        pdtEpuiseListView = (ListView) findViewById(R.id.pdtEpuiseListView);
+        setContentView(activity_produits_en_stock);
+        pdtEnStockListView = (ListView) findViewById(R.id.pdtEnStockListView);
         if (Build.VERSION.SDK_INT > 9)
         {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -49,7 +48,7 @@ public class ProduitEpuisesActivity extends AppCompatActivity {
                     al = Arrays.asList(str);
                     final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                             (this, android.R.layout.simple_list_item_1, al);
-                    pdtEpuiseListView.setAdapter(arrayAdapter);
+                    pdtEnStockListView.setAdapter(arrayAdapter);
 
 
                     for(String s: al){
@@ -77,7 +76,7 @@ public class ProduitEpuisesActivity extends AppCompatActivity {
 
     public String getListeProduit() throws IOException {
         entrepot = entrepot.replaceAll(" ", "-");
-        URL url = new URL("https://quentindelaporte.fr/PPE4_ALL4SPORT/Controller/produitHorStock.php?ville="+entrepot);
+        URL url = new URL("https://quentindelaporte.fr/PPE4_ALL4SPORT/Controller/produitEnStock.php?ville="+entrepot);
         URLConnection conn = url.openConnection();
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         URLConnection request = url.openConnection();
