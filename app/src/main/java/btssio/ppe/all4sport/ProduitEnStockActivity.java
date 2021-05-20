@@ -9,8 +9,13 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -81,8 +86,34 @@ public class ProduitEnStockActivity extends AppCompatActivity {
         BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         URLConnection request = url.openConnection();
         request.connect();
-        String output;
-        return rd.readLine()+"";
+        String output=rd.readLine();
+        return jsonToString(output);
+    }
+
+    public String jsonToString(String js){
+        String output=js;
+        output = output.replaceAll("\\[", " ");
+        output = output.replaceAll("]", " ");
+        output = output.replaceAll("\",\"", "\"};{\"");
+        output = output.replaceAll(",", ";");
+        String str[] = output.split(";");
+        List<String> al = new ArrayList<String>();
+        al = Arrays.asList(str);
+
+        String s = "";
+
+        JsonParser jp = new JsonParser();
+        for(String n: al){
+            JsonElement root = jp.parse(n);
+            JsonObject rootobj = root.getAsJsonObject();
+            JsonElement json = rootobj.get("PR_Libelle");
+            try{
+                s=s+";"+json.getAsString();
+            } catch (NullPointerException e){
+
+            }
+        }
+        return s;
     }
 
 }

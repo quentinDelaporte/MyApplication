@@ -86,13 +86,13 @@ public class AcceuilActivity extends AppCompatActivity {
         listePdtEpuiseBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                launchProduitEpuiseActivity();
+                launchActivity(ProduitEpuisesActivity.class);
             }
         });
         listePdtEnStockBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                launchProduitEnStockActivity();
+                launchActivity(ProduitEnStockActivity.class);
             }
         });
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -118,8 +118,7 @@ public class AcceuilActivity extends AppCompatActivity {
 
             //Verif que ref pdt existe avec info prdt
 
-
-            launchActivity();
+            launchActivity(FormAddActivity.class);
         } else {
             //Erreur si retour en arriere ou si qr code non trouvé.
             Toast.makeText(getApplicationContext(),
@@ -191,33 +190,14 @@ public class AcceuilActivity extends AppCompatActivity {
         verifPerms();
     }
 
-    private void launchActivity() {
-        Intent intent = new Intent(this, FormAddActivity.class);
-        intent.putExtra("location",location);
-        intent.putExtra("idProduit",idProduit);
-        intent.putExtra("name", name);
 
-        startActivity(intent);
-    }
-
-    private void launchProduitEpuiseActivity() {
-        Intent intent = new Intent(this, ProduitEpuisesActivity.class);
+    private void launchActivity(Class c) {
+        Intent intent = new Intent(this, c);
         intent.putExtra("location",location);
         intent.putExtra("name", name);
 
         startActivity(intent);
     }
-
-    private void launchProduitEnStockActivity() {
-        Intent intent = new Intent(this, ProduitEnStockActivity.class);
-        intent.putExtra("location",location);
-        intent.putExtra("name", name);
-
-        startActivity(intent);
-    }
-
-
-
 
 
 
